@@ -1,7 +1,8 @@
-package com.edbinns.poesiadelamusica
+package com.edbinns.poesiadelamusica.view.activitys
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.edbinns.poesiadelamusica.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
