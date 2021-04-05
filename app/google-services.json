@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "121576541713",
+    "project_id": "poesiadelrap-82376",
+    "storage_bucket": "poesiadelrap-82376.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121576541713:android:7d24e3504cfbf74de42bb0",
+        "android_client_info": {
+          "package_name": "com.edbinns.poesiadelamusica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121576541713-0jtnpruni4h9e0m739679v6q4o9s43n5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnPLVSAjNe6XpDStrc8ilN0lp9Gl6mMfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121576541713-0jtnpruni4h9e0m739679v6q4o9s43n5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
