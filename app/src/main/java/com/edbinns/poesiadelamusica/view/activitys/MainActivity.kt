@@ -2,16 +2,23 @@ package com.edbinns.poesiadelamusica.view.activitys
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.edbinns.poesiadelamusica.R
+import com.edbinns.poesiadelamusica.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
+        configNav()
+    }
 
-
-
-
+    private fun configNav() {
+        NavigationUI.setupWithNavController(binding.bnvMenu, Navigation.findNavController(this, R.id.fragContent))
     }
 }
