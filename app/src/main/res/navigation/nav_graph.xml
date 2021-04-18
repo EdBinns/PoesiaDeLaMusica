@@ -8,8 +8,19 @@
     <fragment
         android:id="@+id/navCategorysFragment"
         android:name="com.edbinns.poesiadelamusica.view.fragments.CategorysFragment"
-        android:label="fragment_hero"
+        android:label="fragment_category"
         tools:layout="@layout/fragment_categorys">
 
+        <action
+            android:id="@+id/action_categorys_to_phrases"
+            app:destination="@id/navCategorysFragment" />
     </fragment>
+
+
+    <dialog
+        android:id="@+id/navDialogPhrases"
+        android:name="com.edbinns.poesiadelamusica.view.fragments.PhrasesDialogFragment"
+        android:label="Phrases"
+        tools:layout="@layout/fragment_phrases_dialog" />
+
 </navigation>

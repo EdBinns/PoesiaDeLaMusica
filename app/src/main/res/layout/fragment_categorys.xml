@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvElectro"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp">
@@ -63,6 +64,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvPOP"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp">
@@ -117,6 +119,7 @@
         </com.google.android.material.card.MaterialCardView
          >
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvROCK"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp">
@@ -168,6 +171,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvRAP"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp">

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/llItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPhrase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:layout_margin="5dp"
+                    android:text="Frase"
+                    android:textSize="20sp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="5dp"
+                    >
+                    <TextView
+                        android:id="@+id/tvArtits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="Astista"
+                        android:textSize="15sp"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="bottom|start"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp">
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_send"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:layout_toRightOf="@+id/fab_favorite"
+                            android:elevation="2dp"
+                            android:tint="@android:color/white"
+                            app:borderWidth="0dp"
+                            android:src="@drawable/ic_share"
+                            />
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_favorite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:layout_toRightOf="@+id/fab_like"
+                            android:elevation="2dp"
+                            android:tint="@android:color/white"
+                            app:borderWidth="0dp"
+                            android:src="@drawable/ic_favorite"
+                            />
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="invisible"
+                            android:layout_toRightOf="@+id/fab"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:elevation="2dp"
+                            android:tint="@android:color/white"
+                            app:borderWidth="0dp"
+                            android:src="@drawable/ic_like"
+                            />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@drawable/ic_add"
+                            android:elevation="2dp"
+                            android:tint="@android:color/white"
+                            app:borderWidth="0dp"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
