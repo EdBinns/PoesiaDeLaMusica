@@ -14,6 +14,7 @@ import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.databinding.FragmentPhrasesDialogBinding
 import com.edbinns.poesiadelamusica.databinding.ItemPhrasesBinding
 import com.edbinns.poesiadelamusica.models.Phrases
+import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
 import java.util.ArrayList
 
 class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : RecyclerView.Adapter<PhrasesAdapter.PhrasesViewHolder>() {
@@ -23,6 +24,7 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
 
     private var clicked : Boolean = false
 
+    private var viewModel : PhrasesViewModel? = null
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim)
     }
@@ -45,7 +47,7 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
 
     override fun onBindViewHolder(holder: PhrasesViewHolder, position: Int) {
 
-//        holder.cvContainer.animation = AnimationUtils.loadAnimation(context,R.anim.slide)
+
         val typefaceMonoglyceride =  Typeface.createFromAsset(context?.assets,"fonts/Monoglyceride.ttf")
         with(holder){
             with(phrasesList[position]){
@@ -60,6 +62,14 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
                 binding.fab.setOnClickListener {
                     onAddButtonClick(binding)
                 }
+
+
+                binding.fabLike.setOnClickListener {
+                    likes += 1
+                    binding.tvCantLike.text = likes.toString()
+                    viewModel?.toLike(this)
+                }
+
                 phrasesListener.onCLickListener(this)
             }
         }
@@ -68,6 +78,10 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
     fun updateData(data: List<Phrases>) {
         phrasesList.addAll(data)
         notifyDataSetChanged()
+    }
+
+    fun setViewModel(viewModel: PhrasesViewModel){
+        this.viewModel = viewModel
     }
 
     private fun onAddButtonClick(binding: ItemPhrasesBinding) {

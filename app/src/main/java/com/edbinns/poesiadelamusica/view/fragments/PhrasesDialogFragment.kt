@@ -20,6 +20,8 @@ import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
 import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
+import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
+import com.edbinns.poesiadelamusica.usecases.ToLiKE
 import com.edbinns.poesiadelamusica.view.adapters.ItemClickListener
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
@@ -48,6 +50,14 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases> {
         GetListPhrasesUseCase(phrasesRespository)
     }
 
+    private val toLikeUseCase : ToLiKE by lazy {
+        ToLiKE(phrasesRespository)
+    }
+
+    private val getPhraseUpdate : GetPhraseUpdate by lazy {
+        GetPhraseUpdate(phrasesRespository)
+    }
+
     private val phrasesAdapter : PhrasesAdapter by lazy {
         PhrasesAdapter(this)
     }
@@ -63,12 +73,15 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases> {
 
         category = arguments?.getSerializable("category") as String
 
-
+        phrasesViewModel.getUseCase(toLikeUseCase)
         binding.swipeContainer.setOnRefreshListener {
             phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
+
             observe()
             binding.reloadButton.visibility = View.GONE
         }
+
+        phrasesAdapter.setViewModel(phrasesViewModel)
         listener()
         return binding.root
     }
