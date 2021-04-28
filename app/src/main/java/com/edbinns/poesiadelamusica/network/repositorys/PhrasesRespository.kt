@@ -25,11 +25,13 @@ class PhrasesRespository( private val firestoreService: FirestoreService) {
     private fun getPhrasesListFromFirebase(category: String){
         firestoreService.getPhrases(category, object : Callback<List<Phrases>>{
             override fun onSuccess(result: List<Phrases>?) {
+                listenCollectionUpdate()
                 phrasesListLiveData.postValue(result)
-                result?.forEach { p ->
-                    println("For en la lista")
-                    listenUpdate(p)
-                }
+//                result?.forEach { p ->
+//                    println("For en la lista")
+//                    listenUpdate(p)
+//
+//                }
             }
             override fun onFailed(exception: Exception) {
                 println("Errror al obtener las frases ${exception.message}")
@@ -59,6 +61,20 @@ class PhrasesRespository( private val firestoreService: FirestoreService) {
 
             override fun onError(exception: Exception) {
                 println("Error al actualizar $exception")
+            }
+
+        })
+    }
+
+    private fun listenCollectionUpdate() {
+        firestoreService.listenUpdates(object : RealtimeDataListener<Phrases> {
+            override fun onDataChange(updatedData: Phrases) {
+                println("frase actualizada $updatedData")
+                phrasesUpdate.postValue(updatedData)
+            }
+
+            override fun onError(exception: Exception) {
+                println("Error al actualizar ${exception.message}")
             }
 
         })

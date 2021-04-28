@@ -20,11 +20,13 @@ import java.util.ArrayList
 class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : RecyclerView.Adapter<PhrasesAdapter.PhrasesViewHolder>() {
 
     private val phrasesList : ArrayList<Phrases> = ArrayList()
+
     private var context: Context? = null
 
     private var clicked : Boolean = false
 
     private var viewModel : PhrasesViewModel? = null
+
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim)
     }
@@ -46,9 +48,8 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
     override fun getItemCount(): Int = phrasesList.size
 
     override fun onBindViewHolder(holder: PhrasesViewHolder, position: Int) {
-
-
         val typefaceMonoglyceride =  Typeface.createFromAsset(context?.assets,"fonts/Monoglyceride.ttf")
+
         with(holder){
             with(phrasesList[position]){
                 with(binding.tvPhrase){
@@ -59,17 +60,17 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
                     text = artist
                     typeface = typefaceMonoglyceride
                 }
+                with(  binding.tvCantLike){
+                    text = likes.toString()
+                    typeface = typefaceMonoglyceride
+                }
                 binding.fab.setOnClickListener {
                     onAddButtonClick(binding)
                 }
 
-
                 binding.fabLike.setOnClickListener {
-                    likes += 1
-                    binding.tvCantLike.text = likes.toString()
                     viewModel?.toLike(this)
                 }
-
                 phrasesListener.onCLickListener(this)
             }
         }
@@ -77,6 +78,16 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
 
     fun updateData(data: List<Phrases>) {
         phrasesList.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun updateItem(item: Phrases) {
+        for (i in 0 until phrasesList.size) {
+            val phrase = phrasesList[i]
+            if (phrase.uid == item.uid) {
+                phrasesList[i] = item
+            }
+        }
         notifyDataSetChanged()
     }
 

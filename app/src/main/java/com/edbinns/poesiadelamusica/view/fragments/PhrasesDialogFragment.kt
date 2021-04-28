@@ -106,6 +106,11 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases> {
             phrasesAdapter.updateData(list)
             hideLoader()
         })
+
+        phrasesViewModel.getUseCase(getPhraseUpdate).observe(this, Observer { item ->
+            println("observer $item")
+            phrasesAdapter.updateItem(item)
+        })
     }
 
     private fun showLoader(){

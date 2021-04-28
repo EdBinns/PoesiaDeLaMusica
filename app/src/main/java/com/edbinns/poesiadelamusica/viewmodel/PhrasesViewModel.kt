@@ -13,6 +13,7 @@ import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 class PhrasesViewModel : ViewModel(){
 
     private var phrasesListMutable = MutableLiveData<List<Phrases>>()
+
     private var toLikeUseCase: ToLiKE? = null
     fun getUseCase(getListPhrasesUseCase: GetListPhrasesUseCase, category:String) {
         phrasesListMutable=  getListPhrasesUseCase.invoke(category)
@@ -22,12 +23,12 @@ class PhrasesViewModel : ViewModel(){
 
     fun getUseCase(toLiKE: ToLiKE) {
         toLikeUseCase = toLiKE
-    }
+    } 
     fun toLike(phrases: Phrases){
+        phrases.likes += 1
         toLikeUseCase?.invoke(phrases)
     }
 
-    fun getUseCase(getPhraseUpdate: GetPhraseUpdate){
-        getPhraseUpdate.invoke()
-    }
+    fun getUseCase(getPhraseUpdate: GetPhraseUpdate): LiveData<Phrases> = getPhraseUpdate.invoke()
+
 }

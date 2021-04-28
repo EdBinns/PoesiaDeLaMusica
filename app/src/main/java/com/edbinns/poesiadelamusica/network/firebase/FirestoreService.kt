@@ -59,4 +59,29 @@ class FirestoreService(private val firebaseFirestore: FirebaseFirestore) {
             }
         }
     }
+
+    fun listenUpdates(listener: RealtimeDataListener<Phrases>) {
+        val collectionName = firebaseFirestore.collection(PHRASES_COLLECTION_NAME)
+
+        collectionName.addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.w(TAG, "Listen failed.", error)
+                listener.onError(error)
+                return@addSnapshotListener
+            }
+
+            if (value != null && !value.isEmpty) {
+//                val phrasesList = mutableListOf<Phrases>()
+                for (documentChange in value.documentChanges) {
+                    val document = documentChange.document
+                    println("Frases ${document["likes"] is Long}")
+                    val phrase = Phrases(document.id, document["artist"] as String, document["category"] as String, document["likes"] as Long, document["phrase"] as String)
+                    listener.onDataChange(phrase)
+                }
+
+            } else {
+                Log.d(TAG, "Current data: null")
+            }
+        }
+    }
 }
