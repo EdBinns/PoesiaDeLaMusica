@@ -47,7 +47,7 @@ class FavoritesAdapter (private val phrasesListener: ItemClickListener<Phrases>,
                 }
 
                 phrasesListener.onCLickListener(this)
-                bindingFavoritesListener.setAnimInButtons(binding,this)
+                bindingFavoritesListener.bindingListener(binding,this)
             }
         }
     }

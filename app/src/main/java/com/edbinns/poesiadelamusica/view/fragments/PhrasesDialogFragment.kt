@@ -1,5 +1,10 @@
 package com.edbinns.poesiadelamusica.view.fragments
 
+import android.app.AppOpsManager
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +12,10 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ComputableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,15 +28,20 @@ import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
+import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
+import com.edbinns.poesiadelamusica.view.Utils.showLongMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingPhraseListener
 import com.edbinns.poesiadelamusica.view.adapters.ItemClickListener
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
+import com.google.common.util.concurrent.ServiceManager
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, BindingPhraseListener {
+
+
 
     private var _binding: FragmentPhrasesDialogBinding? = null
     // This property is only valid between onCreateView and
@@ -152,7 +164,8 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
     }
 
     override fun onCLickListener(data: Phrases) {
-       println("click en frase $data")
+        println("click en frase $data")
+
     }
     override fun setAnimInButtons(binding: ItemPhrasesBinding,data: Phrases) {
         binding.fab.setOnClickListener {
@@ -164,6 +177,11 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
         }
         binding.fabFavorite.setOnClickListener {
             insertDataToDatabase(data)
+        }
+        binding.tvPhrase.setOnClickListener {
+            with(data) {
+                phrase.copyToClipboard(requireContext())
+            }
         }
     }
 
@@ -219,4 +237,6 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
         }
 
     }
+
+
 }
