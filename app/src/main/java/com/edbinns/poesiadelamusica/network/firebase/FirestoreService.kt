@@ -8,7 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 const val PHRASES_COLLECTION_NAME = "frases"
 
 class FirestoreService(private val firebaseFirestore: FirebaseFirestore) {
-
+// Link para la paginacion
+//    https://firebase.google.com/docs/firestore/query-data/query-cursors
     fun setDocument(data: Any, collectionName: String, id: String, callback: Callback<Void>) {
         firebaseFirestore.collection(collectionName).document(id).set(data)
                 .addOnSuccessListener { callback.onSuccess(null) }
@@ -22,7 +23,6 @@ class FirestoreService(private val firebaseFirestore: FirebaseFirestore) {
                 .addOnSuccessListener { documents ->
                     val phrasesList = mutableListOf<Phrases>()
                     for (document in documents) {
-                        println("Frases ${document["likes"] is Long}")
                         val phrase = Phrases(document.id, document["artist"] as String, document["category"] as String, document["likes"] as Long, document["phrase"] as String)
                         phrasesList.add(phrase)
                     }
@@ -74,7 +74,6 @@ class FirestoreService(private val firebaseFirestore: FirebaseFirestore) {
 //                val phrasesList = mutableListOf<Phrases>()
                 for (documentChange in value.documentChanges) {
                     val document = documentChange.document
-                    println("Frases ${document["likes"] is Long}")
                     val phrase = Phrases(document.id, document["artist"] as String, document["category"] as String, document["likes"] as Long, document["phrase"] as String)
                     listener.onDataChange(phrase)
                 }

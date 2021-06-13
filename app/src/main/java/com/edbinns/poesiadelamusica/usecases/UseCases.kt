@@ -1,9 +1,7 @@
 package com.edbinns.poesiadelamusica.usecases
 
-import androidx.lifecycle.MutableLiveData
 import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
-
 
 
 class GetListPhrasesUseCase(private val phrasesRespository: PhrasesRespository) {
@@ -20,4 +18,8 @@ class ToLiKE(private val phrasesRespository: PhrasesRespository) {
 
 class GetPhraseUpdate(private val phrasesRespository: PhrasesRespository) {
     fun invoke() = phrasesRespository.getPhraseUpdate()
+}
+
+class ListenUpdate(private val phrasesRespository: PhrasesRespository){
+    fun invoke() = phrasesRespository.listenCollectionUpdate()
 }

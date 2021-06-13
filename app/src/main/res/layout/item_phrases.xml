@@ -75,18 +75,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp">
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_send"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="invisible"
-                            android:layout_margin="@dimen/fab_margin"
-                            android:layout_toRightOf="@+id/fab_favorite"
-                            android:elevation="2dp"
-                            android:tint="@android:color/white"
-                            app:borderWidth="0dp"
-                            android:src="@drawable/ic_share"
-                            />
+
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/fab_favorite"
                             android:layout_width="wrap_content"

@@ -9,36 +9,28 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.databinding.FragmentPhrasesDialogBinding
 import com.edbinns.poesiadelamusica.databinding.ItemPhrasesBinding
 import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.ArrayList
 
-class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : RecyclerView.Adapter<PhrasesAdapter.PhrasesViewHolder>() {
+class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>, private val bindingPhraseListener: BindingPhraseListener) : RecyclerView.Adapter<PhrasesAdapter.PhrasesViewHolder>() {
 
-    private val phrasesList : ArrayList<Phrases> = ArrayList()
+    private var phrasesList : ArrayList<Phrases> = ArrayList()
 
     private var context: Context? = null
 
-    private var clicked : Boolean = false
 
-    private var viewModel : PhrasesViewModel? = null
 
-    private val rotateOpen: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim)
-    }
-    private val rotateClose: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.rotate_close_anim)
-    }
-    private val fromBottom: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.from_bottom_anim)
-    }
-    private val toBottom: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.to_bottom_anim)
-    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhrasesViewHolder {
         context = parent.context
         val binding = ItemPhrasesBinding.inflate(LayoutInflater.from(context), parent, false)
@@ -64,14 +56,9 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
                     text = likes.toString()
                     typeface = typefaceMonoglyceride
                 }
-                binding.fab.setOnClickListener {
-                    onAddButtonClick(binding)
-                }
 
-                binding.fabLike.setOnClickListener {
-                    viewModel?.toLike(this)
-                }
                 phrasesListener.onCLickListener(this)
+                bindingPhraseListener.setAnimInButtons(binding,this)
             }
         }
     }
@@ -91,63 +78,12 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>) : 
         notifyDataSetChanged()
     }
 
-    fun setViewModel(viewModel: PhrasesViewModel){
-        this.viewModel = viewModel
+    fun deleteData(){
+        phrasesList.clear()
+        notifyDataSetChanged()
     }
 
-    private fun onAddButtonClick(binding: ItemPhrasesBinding) {
-        setVisibility(clicked,binding)
-        setAnimation(clicked,binding)
-        setClickable(clicked,binding)
-        clicked = !clicked
-    }
 
-    private fun setAnimation(clicked: Boolean, binding: ItemPhrasesBinding) {
-        with(binding) {
-            if (!clicked) {
-                fabLike.startAnimation(fromBottom)
-                fabSend.startAnimation(fromBottom)
-                binding.fabFavorite.startAnimation(fromBottom)
-                binding.fab.startAnimation(rotateOpen)
-            } else {
-                fabLike.startAnimation(toBottom)
-                fabSend.startAnimation(toBottom)
-                fabFavorite.startAnimation(toBottom)
-                fab.startAnimation(rotateClose)
-            }
-        }
-
-    }
-
-    private fun setVisibility(clicked: Boolean, binding: ItemPhrasesBinding) {
-        with(binding) {
-            if (!clicked) {
-                fabLike.visibility = View.VISIBLE
-                fabSend.visibility = View.VISIBLE
-                fabFavorite.visibility = View.VISIBLE
-            } else {
-                fabLike.visibility = View.INVISIBLE
-                fabSend.visibility = View.INVISIBLE
-                fabFavorite.visibility = View.INVISIBLE
-            }
-        }
-
-    }
-
-    private fun setClickable(clicked: Boolean, binding: ItemPhrasesBinding) {
-        with(binding) {
-            if (!clicked) {
-                fabLike.isClickable = true
-                fabFavorite.isClickable = true
-                fabSend.isClickable = true
-            } else {
-                fabLike.isClickable = false
-                fabFavorite.isClickable = false
-                fabSend.isClickable = false
-            }
-        }
-
-    }
 
 
    inner  class PhrasesViewHolder( val binding : ItemPhrasesBinding): RecyclerView.ViewHolder(binding.root)
