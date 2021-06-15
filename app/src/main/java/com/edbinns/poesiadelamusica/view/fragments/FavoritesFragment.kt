@@ -21,6 +21,8 @@ import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
 import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.network.room.toPhrasesList
 import com.edbinns.poesiadelamusica.usecases.*
+import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
+import com.edbinns.poesiadelamusica.view.Utils.showAnim
 import com.edbinns.poesiadelamusica.view.Utils.showLongMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingFavoritesListener
 import com.edbinns.poesiadelamusica.view.adapters.FavoritesAdapter
@@ -40,7 +42,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+    private var click = false
 
     private val firestoreService: FirestoreService by lazy {
         FirestoreService(FirebaseFirestore.getInstance())
@@ -125,11 +127,13 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
         _binding = null
     }
 
-    override fun bindingListener(binding: ItemFavoriteBinding, data: Phrases) {
-        binding.imvDelete.setOnClickListener {
+    override fun bindingListener(bindingItem: ItemFavoriteBinding, data: Phrases) {
+        bindingItem.imvDelete.setOnClickListener {
             favoritesViewModel.deleteFavorite(data)
+            binding.animViewFav.showAnim(click,R.raw.delete)
+
         }
-        binding.tvPhraseFavorite.setOnClickListener {
+        bindingItem.tvPhraseFavorite.setOnClickListener {
             with(data) {
                 phrase.copyToClipboard(requireContext())
             }

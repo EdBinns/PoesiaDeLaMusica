@@ -19,13 +19,13 @@ import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
+import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
 import com.edbinns.poesiadelamusica.view.Utils.showAnim
 import com.edbinns.poesiadelamusica.view.adapters.BindingPhraseListener
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.*
 
 
 class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
@@ -39,7 +39,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
 
     private lateinit var category : String
     private lateinit var favoriteViewModel: FavoritesViewModel
-    private var like = false
+    private var click = false
 
     private val firestoreService: FirestoreService by lazy {
         FirestoreService(FirebaseFirestore.getInstance())
@@ -145,10 +145,11 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
 
         bindingItem.imvLIKE.setOnClickListener {
             phrasesViewModel.toLike(data)
-            binding.animView.showAnim(like,R.raw.like)
+            binding.animView.showAnim(click,R.raw.like)
         }
         bindingItem.imvFavorite.setOnClickListener {
             insertDataToDatabase(data)
+            binding.animView.showAnim(click,R.raw.bookmark)
         }
         bindingItem.tvPhrase.setOnClickListener {
             with(data) {

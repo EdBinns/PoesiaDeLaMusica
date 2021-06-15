@@ -13,6 +13,13 @@ import com.edbinns.poesiadelamusica.R
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
+fun String.copyToClipboard( context: Context){
+    val clipboard: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clip = ClipData.newPlainText("copy text", this)
+    clipboard.setPrimaryClip(clip)
+    val message = "Se ha copiado en el portapapeles"
+    message.showLongMessage(context)
+}
 fun String.showLongMessage(context: Context){
     Toast.makeText(context,this, Toast.LENGTH_LONG).show()
 }

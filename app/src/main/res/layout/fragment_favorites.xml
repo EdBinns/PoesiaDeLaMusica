@@ -33,5 +33,14 @@
             android:layout_centerInParent="true"
             android:text="Reintentar"
             android:visibility="gone" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animViewFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_delete_outline"
+            app:lottie_rawRes="@raw/like"
+            app:lottie_autoPlay="true" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
