@@ -1,21 +1,12 @@
 package com.edbinns.poesiadelamusica.view.fragments
 
-import android.app.AppOpsManager
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ComputableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,18 +19,16 @@ import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
-import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
-import com.edbinns.poesiadelamusica.view.Utils.showLongMessage
+import com.edbinns.poesiadelamusica.view.Utils.showAnim
 import com.edbinns.poesiadelamusica.view.adapters.BindingPhraseListener
-import com.edbinns.poesiadelamusica.view.adapters.ItemClickListener
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
-import com.google.common.util.concurrent.ServiceManager
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.*
 
 
-class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, BindingPhraseListener {
+class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
 
 
 
@@ -50,19 +39,7 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
 
     private lateinit var category : String
     private lateinit var favoriteViewModel: FavoritesViewModel
-    private var clicked : Boolean = false
-    private val rotateOpen: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim)
-    }
-    private val rotateClose: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.rotate_close_anim)
-    }
-    private val fromBottom: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.from_bottom_anim)
-    }
-    private val toBottom: Animation by lazy {
-        AnimationUtils.loadAnimation(context, R.anim.to_bottom_anim)
-    }
+    private var like = false
 
     private val firestoreService: FirestoreService by lazy {
         FirestoreService(FirebaseFirestore.getInstance())
@@ -87,7 +64,7 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
     }
 
     private val phrasesAdapter : PhrasesAdapter by lazy {
-        PhrasesAdapter(this, this)
+        PhrasesAdapter(this)
     }
     private val manager: LinearLayoutManager by lazy {
         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -163,22 +140,17 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
         _binding = null
     }
 
-    override fun onCLickListener(data: Phrases) {
-        println("click en frase $data")
 
-    }
-    override fun setAnimInButtons(binding: ItemPhrasesBinding,data: Phrases) {
-        binding.fab.setOnClickListener {
-            onAddButtonClick(binding)
-        }
+    override fun setAnimInButtons(bindingItem :ItemPhrasesBinding, data: Phrases) {
 
-        binding.fabLike.setOnClickListener {
+        bindingItem.imvLIKE.setOnClickListener {
             phrasesViewModel.toLike(data)
+            binding.animView.showAnim(like,R.raw.like)
         }
-        binding.fabFavorite.setOnClickListener {
+        bindingItem.imvFavorite.setOnClickListener {
             insertDataToDatabase(data)
         }
-        binding.tvPhrase.setOnClickListener {
+        bindingItem.tvPhrase.setOnClickListener {
             with(data) {
                 phrase.copyToClipboard(requireContext())
             }
@@ -190,53 +162,8 @@ class PhrasesDialogFragment : DialogFragment(),ItemClickListener<Phrases>, Bindi
         Toast.makeText(requireContext(),"Agregado con exito", Toast.LENGTH_LONG).show()
     }
 
-    private fun onAddButtonClick(binding: ItemPhrasesBinding) {
-        setVisibility(clicked,binding)
-        setAnimation(clicked,binding)
-        setClickable(clicked,binding)
-        clicked = !clicked
-    }
 
-    private fun setAnimation(clicked: Boolean, binding: ItemPhrasesBinding) {
-        with(binding) {
-            if (!clicked) {
-                fabLike.startAnimation(fromBottom)
-                binding.fabFavorite.startAnimation(fromBottom)
-                binding.fab.startAnimation(rotateOpen)
-            } else {
-                fabLike.startAnimation(toBottom)
-                fabFavorite.startAnimation(toBottom)
-                fab.startAnimation(rotateClose)
-            }
-        }
 
-    }
-
-    private fun setVisibility(clicked: Boolean, binding: ItemPhrasesBinding) {
-        with(binding) {
-            if (!clicked) {
-                fabLike.visibility = View.VISIBLE
-                fabFavorite.visibility = View.VISIBLE
-            } else {
-                fabLike.visibility = View.INVISIBLE
-                fabFavorite.visibility = View.INVISIBLE
-            }
-        }
-
-    }
-
-    private fun setClickable(clicked: Boolean, binding: ItemPhrasesBinding) {
-        with(binding) {
-            if (!clicked) {
-                fabLike.isClickable = true
-                fabFavorite.isClickable = true
-            } else {
-                fabLike.isClickable = false
-                fabFavorite.isClickable = false
-            }
-        }
-
-    }
 
 
 }

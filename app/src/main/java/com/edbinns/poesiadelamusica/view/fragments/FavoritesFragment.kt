@@ -21,7 +21,6 @@ import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
 import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.network.room.toPhrasesList
 import com.edbinns.poesiadelamusica.usecases.*
-import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
 import com.edbinns.poesiadelamusica.view.Utils.showLongMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingFavoritesListener
 import com.edbinns.poesiadelamusica.view.adapters.FavoritesAdapter
@@ -31,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 
-class FavoritesFragment : Fragment(), ItemClickListener<Phrases>, BindingFavoritesListener{
+class FavoritesFragment : Fragment(), BindingFavoritesListener{
 
     private var _binding: FragmentFavoritesBinding? = null
 
@@ -58,7 +57,7 @@ class FavoritesFragment : Fragment(), ItemClickListener<Phrases>, BindingFavorit
         ListenUpdate(phrasesRespository)
     }
     private val favoritesAdapter: FavoritesAdapter by lazy {
-        FavoritesAdapter(this,this)
+        FavoritesAdapter(this)
     }
 
     private val manager: LinearLayoutManager by lazy {
@@ -98,9 +97,7 @@ class FavoritesFragment : Fragment(), ItemClickListener<Phrases>, BindingFavorit
         observe()
     }
 
-    override fun onCLickListener(data: Phrases) {
-       println("Favorito click : $data")
-    }
+
 
     private fun observe(){
         favoritesViewModel.favoritesList.observe(viewLifecycleOwner, Observer { list ->
@@ -129,7 +126,7 @@ class FavoritesFragment : Fragment(), ItemClickListener<Phrases>, BindingFavorit
     }
 
     override fun bindingListener(binding: ItemFavoriteBinding, data: Phrases) {
-        binding.fabFav.setOnClickListener {
+        binding.imvDelete.setOnClickListener {
             favoritesViewModel.deleteFavorite(data)
         }
         binding.tvPhraseFavorite.setOnClickListener {

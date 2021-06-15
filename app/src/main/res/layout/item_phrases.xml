@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -75,41 +76,32 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp">
 
+                        <LinearLayout
+                            android:id="@+id/llLike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/imvLIKE"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                app:srcCompat="@drawable/ic_favorite_border"
+                                tools:ignore="VectorDrawableCompat" />
+                        </LinearLayout>
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_favorite"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="invisible"
-                            android:layout_margin="@dimen/fab_margin"
-                            android:layout_toRightOf="@+id/fab_like"
-                            android:elevation="2dp"
-                            android:tint="@android:color/white"
-                            app:borderWidth="0dp"
-                            android:src="@drawable/ic_favorite"
-                            />
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_like"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="invisible"
-                            android:layout_toRightOf="@+id/fab"
-                            android:layout_margin="@dimen/fab_margin"
-                            android:elevation="2dp"
-                            android:tint="@android:color/white"
-                            app:borderWidth="0dp"
-                            android:src="@drawable/ic_like"
-                            />
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab"
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/imvFavorite"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/fab_margin"
-                            android:src="@drawable/ic_add"
-                            android:elevation="2dp"
-                            android:tint="@android:color/white"
-                            app:borderWidth="0dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_bookmark_border"
+                            android:layout_margin="5dp"
+                            android:layout_toRightOf="@+id/llLike"
+                            android:layout_toEndOf="@+id/llLike"
                             />
 
                     </RelativeLayout>

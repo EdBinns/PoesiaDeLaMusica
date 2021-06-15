@@ -15,7 +15,7 @@ import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
 import java.util.ArrayList
 
-class FavoritesAdapter (private val phrasesListener: ItemClickListener<Phrases>, private val bindingFavoritesListener: BindingFavoritesListener)  : RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>(){
+class FavoritesAdapter (private val bindingFavoritesListener: BindingFavoritesListener)  : RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>(){
     private var favoritesList : ArrayList<Phrases> = ArrayList()
 
     private var context: Context? = null
@@ -46,7 +46,6 @@ class FavoritesAdapter (private val phrasesListener: ItemClickListener<Phrases>,
                     typeface = typefaceMonoglyceride
                 }
 
-                phrasesListener.onCLickListener(this)
                 bindingFavoritesListener.bindingListener(binding,this)
             }
         }

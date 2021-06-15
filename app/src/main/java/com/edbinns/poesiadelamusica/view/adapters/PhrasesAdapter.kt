@@ -21,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
-class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>, private val bindingPhraseListener: BindingPhraseListener) : RecyclerView.Adapter<PhrasesAdapter.PhrasesViewHolder>() {
+class PhrasesAdapter(private val bindingPhraseListener: BindingPhraseListener) : RecyclerView.Adapter<PhrasesAdapter.PhrasesViewHolder>() {
 
     private var phrasesList : ArrayList<Phrases> = ArrayList()
 
@@ -57,7 +57,6 @@ class PhrasesAdapter(private val phrasesListener: ItemClickListener<Phrases>, pr
                     typeface = typefaceMonoglyceride
                 }
 
-                phrasesListener.onCLickListener(this)
                 bindingPhraseListener.setAnimInButtons(binding,this)
             }
         }

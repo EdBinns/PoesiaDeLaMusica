@@ -77,20 +77,14 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp">
 
+                    <ImageView
+                        android:id="@+id/imvDelete"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/ic_delete_outline" />
 
-
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fabFav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/fab_margin"
-                        android:src="@drawable/ic_baseline_delete_24"
-                        android:elevation="2dp"
-                        android:tint="@android:color/white"
-                        app:borderWidth="0dp"
-                        android:contentDescription="TODO"
-                        tools:targetApi="lollipop" />
 
                 </RelativeLayout>
 

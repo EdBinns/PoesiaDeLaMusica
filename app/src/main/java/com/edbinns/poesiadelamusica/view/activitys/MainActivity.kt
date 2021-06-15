@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         configNav()
-        lifecycleScope.launch {
-
-        }
 
     }
 
