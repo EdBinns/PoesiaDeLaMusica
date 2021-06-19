@@ -1,15 +1,22 @@
 package com.edbinns.poesiadelamusica.viewmodel
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
+import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.models.Favorites
 import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.network.repositorys.FavoritesRepository
 import com.edbinns.poesiadelamusica.network.room.FavoritesDB
 import com.edbinns.poesiadelamusica.network.room.toFavorites
-import com.edbinns.poesiadelamusica.network.room.toPhrasesList
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.ListenUpdate
+import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.IT_ALREADY_EXISTS
+import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.SUCCESSFULLY_ADDED
+import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.SUCCESSFULLY_DELETE
+import com.edbinns.poesiadelamusica.view.Utils.showMessage
+import com.google.firebase.firestore.core.View
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -25,14 +32,12 @@ class FavoritesViewModel(application: Application):AndroidViewModel(application)
         favoritesList = repository.getAll
     }
 
-    fun addFavorite(phrases: Phrases){
+    fun addFavorite(phrases: Phrases) {
         val favorite = phrases.toFavorites()
         viewModelScope.launch(Dispatchers.IO) {
-            val temp: Favorites?= repository.getById(favorite.uid)
-           if(temp == null)
-               repository.addFavorite(favorite)
-           else
-               println("Ya existe esta frase en los favoritos")
+            val temp: Favorites? = repository.getById(favorite.uid)
+            if (temp == null)
+                repository.addFavorite(favorite)
         }
     }
 

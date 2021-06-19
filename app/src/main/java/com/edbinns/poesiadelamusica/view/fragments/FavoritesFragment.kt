@@ -1,11 +1,13 @@
 package com.edbinns.poesiadelamusica.view.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,9 +23,11 @@ import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
 import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.network.room.toPhrasesList
 import com.edbinns.poesiadelamusica.usecases.*
+import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.EMPTY_LIST
 import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
 import com.edbinns.poesiadelamusica.view.Utils.showAnim
 import com.edbinns.poesiadelamusica.view.Utils.showLongMessage
+import com.edbinns.poesiadelamusica.view.Utils.showMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingFavoritesListener
 import com.edbinns.poesiadelamusica.view.adapters.FavoritesAdapter
 import com.edbinns.poesiadelamusica.view.adapters.ItemClickListener
@@ -73,6 +77,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,6 +92,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding.rvFavorite) {
@@ -100,12 +106,13 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
     }
 
 
-
-    private fun observe(){
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun observe() {
         favoritesViewModel.favoritesList.observe(viewLifecycleOwner, Observer { list ->
-                println("Lista de favoritos $list")
-                favoritesAdapter.updateData( list.toPhrasesList())
-                hideLoader()
+            if (list.isNullOrEmpty())
+                EMPTY_LIST.showMessage(requireView(), R.color.warning_color)
+            favoritesAdapter.updateData(list.toPhrasesList())
+            hideLoader()
         })
 
         favoritesViewModel.getUseCase(getPhraseUpdate).observe(viewLifecycleOwner, Observer { phrase ->
@@ -127,6 +134,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
         _binding = null
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun bindingListener(bindingItem: ItemFavoriteBinding, data: Phrases) {
         bindingItem.imvDelete.setOnClickListener {
             favoritesViewModel.deleteFavorite(data)
@@ -135,7 +143,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
         }
         bindingItem.tvPhraseFavorite.setOnClickListener {
             with(data) {
-                phrase.copyToClipboard(requireContext())
+                phrase.copyToClipboard(requireContext(),requireView())
             }
         }
     }

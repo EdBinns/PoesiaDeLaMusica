@@ -6,5 +6,5 @@ import com.edbinns.poesiadelamusica.models.Phrases
 
 interface BindingPhraseListener {
 
-    fun setAnimInButtons(binding: ItemPhrasesBinding, data : Phrases)
+    fun setAnimInButtons(bindingItem: ItemPhrasesBinding, data : Phrases)
 }

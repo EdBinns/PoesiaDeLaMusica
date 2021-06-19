@@ -1,10 +1,12 @@
 package com.edbinns.poesiadelamusica.view.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -141,6 +143,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun setAnimInButtons(bindingItem :ItemPhrasesBinding, data: Phrases) {
 
         bindingItem.imvLIKE.setOnClickListener {
@@ -148,19 +151,14 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
             binding.animView.showAnim(click,R.raw.like)
         }
         bindingItem.imvFavorite.setOnClickListener {
-            insertDataToDatabase(data)
+            favoriteViewModel.addFavorite(data)
             binding.animView.showAnim(click,R.raw.bookmark)
         }
         bindingItem.tvPhrase.setOnClickListener {
             with(data) {
-                phrase.copyToClipboard(requireContext())
+                phrase.copyToClipboard(requireContext(),requireView())
             }
         }
-    }
-
-    private fun insertDataToDatabase(item : Phrases) {
-        favoriteViewModel.addFavorite(item)
-        Toast.makeText(requireContext(),"Agregado con exito", Toast.LENGTH_LONG).show()
     }
 
 

@@ -5,5 +5,5 @@ import com.edbinns.poesiadelamusica.models.Phrases
 
 interface BindingFavoritesListener {
 
-    fun bindingListener(binding: ItemFavoriteBinding, data: Phrases)
+    fun bindingListener(bindingItem: ItemFavoriteBinding, data: Phrases)
 }
