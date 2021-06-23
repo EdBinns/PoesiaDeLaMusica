@@ -1,10 +1,14 @@
 package com.edbinns.poesiadelamusica.view.fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
@@ -20,13 +24,16 @@ import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
 import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
+import com.edbinns.poesiadelamusica.usecases.SearchPhrase
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
 import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
 import com.edbinns.poesiadelamusica.view.Utils.showAnim
+import com.edbinns.poesiadelamusica.view.Utils.showMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingPhraseListener
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -42,6 +49,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
     private lateinit var category : String
     private lateinit var favoriteViewModel: FavoritesViewModel
     private var click = false
+    private var filter = ""
 
     private val firestoreService: FirestoreService by lazy {
         FirestoreService(FirebaseFirestore.getInstance())
@@ -64,6 +72,9 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
     private val getPhraseUpdate : GetPhraseUpdate by lazy {
         GetPhraseUpdate(phrasesRespository)
     }
+    private val SearchPhrase : SearchPhrase by lazy {
+        SearchPhrase(phrasesRespository)
+    }
 
     private val phrasesAdapter : PhrasesAdapter by lazy {
         PhrasesAdapter(this)
@@ -85,7 +96,10 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
 
         binding.swipeContainer.setOnRefreshListener {
             phrasesAdapter.deleteData()
-            phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
+            if(filter.isEmpty())
+                phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
+            else
+                phrasesViewModel.getUseCase(SearchPhrase, filter, category)
             binding.reloadButton.visibility = View.GONE
         }
 
@@ -103,6 +117,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
             adapter = phrasesAdapter
         }
 
+        searchPhrase()
         showLoader()
         phrasesViewModel.getUseCase(getListPhrasesUseCase, category)
         observe()
@@ -120,6 +135,8 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
             phrasesAdapter.updateItem(item)
             favoriteViewModel.updateFavorites(item)
         })
+
+
     }
 
     private fun showLoader(){
@@ -159,10 +176,77 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
                 phrase.copyToClipboard(requireContext(),requireView())
             }
         }
+        observerFavoriteList(bindingItem, data)
+    }
+
+    private fun observerFavoriteList(bindingItem: ItemPhrasesBinding, data: Phrases) {
+        favoriteViewModel.favoritesList.observe(this, Observer { list ->
+            for (item in list) {
+                if (item.uid == data.uid) {
+                    bindingItem.imvFavorite.setImageResource(R.drawable.ic_bookmark)
+                }
+            }
+        })
     }
 
 
+    /**
+     * Función que se ejecuta cuando el usuario quiere realizar una busqueda de algún libro
+     * en especifico
+     */
+    private fun searchPhrase() {
+        with(binding) {
+            searchPhrase.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                @SuppressLint("NewApi")
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    hideKeyboard()
+                    searchPhrase.clearFocus()
+                    search(searchPhrase,query)
+                    return false
+                }
 
+                @RequiresApi(Build.VERSION_CODES.M)
+                override fun onQueryTextChange(newText: String?): Boolean {
 
+                    search(searchPhrase,newText)
+                    return true
+                }
+            })
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun search(searchView: SearchView, query:String?){
+
+        showLoader()
+        phrasesAdapter.deleteData()
+        //obtener lo que el mae escribe
+        query?.let{
+            if (query.isEmpty()) {
+                filter = ""
+                println("filter $filter")
+                phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
+                hideLoader()
+            } else {
+                filter = query
+                phrasesViewModel.getUseCase(SearchPhrase, filter, category)
+                hideLoader()
+            }
+        }
+
+    }
+    /**
+     * Función que se ejecuta apenas el usuario inicia una busqueda, esta oculta el teclado
+     */
+    private fun hideKeyboard() {
+        if (view != null) {
+            //Aquí esta la magia
+            val input =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            input.hideSoftInputFromWindow(requireView().windowToken, 0)
+            val menu: BottomNavigationView = requireActivity().findViewById(R.id.bnvMenu)
+            menu.visibility =  View.VISIBLE
+        }
+    }
 
 }

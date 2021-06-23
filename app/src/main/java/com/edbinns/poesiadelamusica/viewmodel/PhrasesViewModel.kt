@@ -8,6 +8,7 @@ import com.edbinns.poesiadelamusica.network.firebase.PHRASES_COLLECTION_NAME
 import com.edbinns.poesiadelamusica.network.room.toFavorites
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
+import com.edbinns.poesiadelamusica.usecases.SearchPhrase
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 
@@ -25,7 +26,9 @@ class PhrasesViewModel : ViewModel(){
     fun getUseCase(toLiKE: ToLiKE) {
         toLikeUseCase = toLiKE
     }
-
+    fun getUseCase(searchPhaseUseCase: SearchPhrase, artits:String,category:String) {
+        phrasesListMutable=  searchPhaseUseCase.invoke(artits,category)
+    }
 
     fun getListPhases(): LiveData<List<Phrases>> = phrasesListMutable
 

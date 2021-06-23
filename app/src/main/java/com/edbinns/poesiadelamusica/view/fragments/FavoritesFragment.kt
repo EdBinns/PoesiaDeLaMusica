@@ -109,8 +109,11 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
     @RequiresApi(Build.VERSION_CODES.M)
     private fun observe() {
         favoritesViewModel.favoritesList.observe(viewLifecycleOwner, Observer { list ->
-            if (list.isNullOrEmpty())
-                EMPTY_LIST.showMessage(requireView(), R.color.warning_color)
+            if (list.isNullOrEmpty()){
+                binding.imvNotFound.visibility = View.VISIBLE
+                binding.tvNotFound.visibility = View.VISIBLE
+//                EMPTY_LIST.showMessage(requireView(), R.color.warning_color)
+            }
             favoritesAdapter.updateData(list.toPhrasesList())
             hideLoader()
         })

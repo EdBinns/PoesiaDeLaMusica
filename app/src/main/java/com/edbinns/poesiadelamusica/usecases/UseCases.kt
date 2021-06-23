@@ -23,3 +23,7 @@ class GetPhraseUpdate(private val phrasesRespository: PhrasesRespository) {
 class ListenUpdate(private val phrasesRespository: PhrasesRespository){
     fun invoke() = phrasesRespository.listenCollectionUpdate()
 }
+
+class SearchPhrase(private val phrasesRespository: PhrasesRespository){
+    fun invoke(artist: String,category: String) = phrasesRespository.searchPhrase(artist,category)
+}

@@ -6,55 +6,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minWidth="1200dp"
     tools:context=".view.fragments.PhrasesDialogFragment">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <SearchView
+            android:id="@+id/searchPhrase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_search" />
 
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_container"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPhrases"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_container"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPhrases"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_phrases"
+                    />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabBack"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_phrases"
-             />
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@drawable/ic_arrow_back"
+                android:elevation="2dp"
+                android:tint="@android:color/white"
+                app:borderWidth="0dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
+            <Button
+                android:id="@+id/reloadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Reintentar"
+                android:visibility="gone" />
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:src="@drawable/ic_delete_outline"
+                app:lottie_rawRes="@raw/like"
+                app:lottie_autoPlay="true" />
+        </RelativeLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_arrow_back"
-            android:elevation="2dp"
-            android:tint="@android:color/white"
-            app:borderWidth="0dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            />
-        <Button
-            android:id="@+id/reloadButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Reintentar"
-            android:visibility="gone" />
+    </LinearLayout>
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:src="@drawable/ic_delete_outline"
-            app:lottie_rawRes="@raw/like"
-            app:lottie_autoPlay="true" />
-    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,6 +3,7 @@ package com.edbinns.poesiadelamusica.network.firebase
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.edbinns.poesiadelamusica.models.Phrases
+import com.edbinns.poesiadelamusica.view.Utils.descapitalizeAllWords
 import com.google.firebase.firestore.FirebaseFirestore
 
 const val PHRASES_COLLECTION_NAME = "frases"
@@ -31,6 +32,24 @@ class FirestoreService(private val firebaseFirestore: FirebaseFirestore) {
                 .addOnFailureListener { exception -> callback.onFailed(exception) }
     }
 
+    fun searchPhrase(artist: String, category: String, callback: Callback<List<Phrases>>) {
+        firebaseFirestore.collection(PHRASES_COLLECTION_NAME)
+                .whereEqualTo("category", category)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val phrasesList = mutableListOf<Phrases>()
+                    for (document in documents) {
+                        val artistDoc = document["artist"] as String
+                        val str = artistDoc.descapitalizeAllWords()
+                        if(str.contains(artist)){
+                            val phrase = Phrases(document.id,artistDoc , document["category"] as String, document["likes"] as Long, document["phrase"] as String)
+                            phrasesList.add(phrase)
+                        }
+                    }
+                    callback.onSuccess(phrasesList)
+                }
+                .addOnFailureListener { exception -> callback.onFailed(exception) }
+    }
     fun updateLike(phrase: Phrases, callback: Callback<Void>) {
         val docRef = firebaseFirestore.collection(PHRASES_COLLECTION_NAME).document(phrase.uid)
         docRef.update("likes", phrase.likes)

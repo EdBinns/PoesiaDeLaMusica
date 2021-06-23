@@ -61,4 +61,23 @@ class PhrasesRespository( private val firestoreService: FirestoreService) {
 
         })
     }
+    fun searchPhrase(artist:String,category: String):MutableLiveData<List<Phrases>>{
+        searchPhraseByArtist(artist,category)
+        return phrasesListLiveData
+    }
+
+
+    private fun searchPhraseByArtist(artist:String,category: String){
+        firestoreService.searchPhrase(artist,category, object :Callback<List<Phrases>>{
+            override fun onSuccess(result: List<Phrases>?) {
+                phrasesListLiveData.postValue(result)
+            }
+
+            override fun onFailed(exception: Exception) {
+                println("Errror al buscar las frases ${exception.message}")
+            }
+
+        })
+
+    }
 }

@@ -6,4 +6,6 @@
     <string name="splash_text1">Poesía de </string>
     <string name="splash_text2">la música</string>
     <string name="splash_image">Imagen del splash</string>
+    <string name="not_found_image">Not found</string>
+    <string name="not_found_text">Aún no tienes favoritos agregados</string>
 </resources>

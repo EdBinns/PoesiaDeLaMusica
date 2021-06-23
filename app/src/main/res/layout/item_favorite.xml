@@ -1,97 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
+        android:id="@+id/llItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/llItem"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPhraseFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_margin="5dp"
+            android:text="Frase"
+            android:textSize="20sp" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp">
 
             <TextView
-                android:id="@+id/tvPhraseFavorite"
+                android:id="@+id/tvArtitsFav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:layout_margin="5dp"
-                android:text="Frase"
-                android:textSize="20sp"/>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="Astista"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvLikeFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="Likes"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvCantLikeFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/tvLikeFav"
+                android:layout_toRightOf="@+id/tvLikeFav"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="0"
+                android:textSize="15sp" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="5dp"
-                >
-                <TextView
-                    android:id="@+id/tvArtitsFav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:text="Astista"
-                    android:textSize="15sp"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp" />
-                <TextView
-                    android:id="@+id/tvLikeFav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:text="Likes"
-                    android:textSize="15sp"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp" />
-                <TextView
-                    android:id="@+id/tvCantLikeFav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tvLikeFav"
-                    android:text="0"
-                    android:textSize="15sp"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toEndOf="@+id/tvLikeFav" />
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvLikeFav"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="bottom|start"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp">
+                android:layout_below="@+id/tvLikeFav"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp">
 
-                    <ImageView
-                        android:id="@+id/imvDelete"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:scaleType="centerCrop"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ic_delete_outline" />
+                <ImageView
+                    android:id="@+id/imvDelete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_delete_outline" />
 
-
-                </RelativeLayout>
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
