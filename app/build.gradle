@@ -88,4 +88,7 @@ dependencies {
 
     //lottie
     implementation "com.airbnb.android:lottie:3.4.2"
+
+    //koin
+    implementation "org.koin:koin-android:1.0.2"
 }
