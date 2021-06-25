@@ -5,35 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.databinding.FragmentFavoritesBinding
 import com.edbinns.poesiadelamusica.databinding.ItemFavoriteBinding
-import com.edbinns.poesiadelamusica.models.Favorites
 import com.edbinns.poesiadelamusica.models.Phrases
-import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
-import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
-import com.edbinns.poesiadelamusica.network.room.toPhrasesList
+import com.edbinns.poesiadelamusica.services.firebase.FirestoreService
+import com.edbinns.poesiadelamusica.services.repositorys.PhrasesRespository
+import com.edbinns.poesiadelamusica.services.room.toPhrasesList
 import com.edbinns.poesiadelamusica.usecases.*
-import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.EMPTY_LIST
 import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
 import com.edbinns.poesiadelamusica.view.Utils.showAnim
-import com.edbinns.poesiadelamusica.view.Utils.showLongMessage
-import com.edbinns.poesiadelamusica.view.Utils.showMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingFavoritesListener
 import com.edbinns.poesiadelamusica.view.adapters.FavoritesAdapter
-import com.edbinns.poesiadelamusica.view.adapters.ItemClickListener
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.launch
 
 
 class FavoritesFragment : Fragment(), BindingFavoritesListener{

@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -20,15 +19,15 @@ import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.databinding.FragmentPhrasesDialogBinding
 import com.edbinns.poesiadelamusica.databinding.ItemPhrasesBinding
 import com.edbinns.poesiadelamusica.models.Phrases
-import com.edbinns.poesiadelamusica.network.firebase.FirestoreService
-import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
+import com.edbinns.poesiadelamusica.services.firebase.FirestoreService
+import com.edbinns.poesiadelamusica.services.repositorys.PhrasesRespository
 import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.SearchPhrase
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
 import com.edbinns.poesiadelamusica.view.Utils.copyToClipboard
+import com.edbinns.poesiadelamusica.view.Utils.descapitalizeAllWords
 import com.edbinns.poesiadelamusica.view.Utils.showAnim
-import com.edbinns.poesiadelamusica.view.Utils.showMessage
 import com.edbinns.poesiadelamusica.view.adapters.BindingPhraseListener
 import com.edbinns.poesiadelamusica.view.adapters.PhrasesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
@@ -201,14 +200,13 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     hideKeyboard()
                     searchPhrase.clearFocus()
-                    search(searchPhrase,query)
+                    search(query)
                     return false
                 }
 
                 @RequiresApi(Build.VERSION_CODES.M)
                 override fun onQueryTextChange(newText: String?): Boolean {
-
-                    search(searchPhrase,newText)
+                    search(newText)
                     return true
                 }
             })
@@ -216,7 +214,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun search(searchView: SearchView, query:String?){
+    private fun search(query:String?){
 
         showLoader()
         phrasesAdapter.deleteData()
@@ -226,12 +224,11 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
                 filter = ""
                 println("filter $filter")
                 phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
-                hideLoader()
             } else {
                 filter = query
-                phrasesViewModel.getUseCase(SearchPhrase, filter, category)
-                hideLoader()
+                phrasesViewModel.getUseCase(SearchPhrase, filter.descapitalizeAllWords(), category)
             }
+            hideLoader()
         }
 
     }

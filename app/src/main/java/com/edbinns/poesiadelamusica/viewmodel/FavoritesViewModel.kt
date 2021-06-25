@@ -1,22 +1,14 @@
 package com.edbinns.poesiadelamusica.viewmodel
 
 import android.app.Application
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.models.Favorites
 import com.edbinns.poesiadelamusica.models.Phrases
-import com.edbinns.poesiadelamusica.network.repositorys.FavoritesRepository
-import com.edbinns.poesiadelamusica.network.room.FavoritesDB
-import com.edbinns.poesiadelamusica.network.room.toFavorites
+import com.edbinns.poesiadelamusica.services.repositorys.FavoritesRepository
+import com.edbinns.poesiadelamusica.services.room.FavoritesDB
+import com.edbinns.poesiadelamusica.services.room.toFavorites
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.ListenUpdate
-import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.IT_ALREADY_EXISTS
-import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.SUCCESSFULLY_ADDED
-import com.edbinns.poesiadelamusica.view.Utils.ConstansUI.SUCCESSFULLY_DELETE
-import com.edbinns.poesiadelamusica.view.Utils.showMessage
-import com.google.firebase.firestore.core.View
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -1,7 +1,7 @@
 package com.edbinns.poesiadelamusica.usecases
 
 import com.edbinns.poesiadelamusica.models.Phrases
-import com.edbinns.poesiadelamusica.network.repositorys.PhrasesRespository
+import com.edbinns.poesiadelamusica.services.repositorys.PhrasesRespository
 
 
 class GetListPhrasesUseCase(private val phrasesRespository: PhrasesRespository) {

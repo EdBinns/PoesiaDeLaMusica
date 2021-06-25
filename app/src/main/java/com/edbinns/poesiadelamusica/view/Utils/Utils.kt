@@ -25,9 +25,9 @@ fun String.copyToClipboard(context: Context, view: View){
     val message = "${ConstansUI.SUCCESSFULLY_ADDED} al portapapeles"
     message.showMessage(view, R.color.ok_color)
 }
-fun String.showLongMessage(context: Context){
-    Toast.makeText(context,this, Toast.LENGTH_LONG).show()
-}
+
+
+
 fun String.descapitalizeAllWords(): String{
     val split = this.split(" ")
     var newStr = ""
@@ -37,6 +37,8 @@ fun String.descapitalizeAllWords(): String{
     }
     return newStr
 }
+
+
 @RequiresApi(Build.VERSION_CODES.M)
 fun String.showMessage(view:View, color: Int){
     val sb = Snackbar.make(view, this, Snackbar.LENGTH_LONG)
