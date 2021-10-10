@@ -56,9 +56,9 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-core:18.0.3'
-    implementation 'com.google.firebase:firebase-auth:20.0.4'
-    implementation 'com.google.firebase:firebase-firestore:22.1.2'
+    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-firestore:23.0.3'
 
 
     //navigation
@@ -69,10 +69,10 @@ dependencies {
 
     //view
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     //corutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
     //lifecycle

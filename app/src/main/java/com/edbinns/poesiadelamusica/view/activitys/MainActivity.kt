@@ -2,12 +2,10 @@ package com.edbinns.poesiadelamusica.view.activitys
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.edbinns.poesiadelamusica.R
 import com.edbinns.poesiadelamusica.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

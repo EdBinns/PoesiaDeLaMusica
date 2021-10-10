@@ -42,7 +42,7 @@ fun String.descapitalizeAllWords(): String{
 @RequiresApi(Build.VERSION_CODES.M)
 fun String.showMessage(view:View, color: Int){
     val sb = Snackbar.make(view, this, Snackbar.LENGTH_LONG)
-    sb.view.setBackgroundColor(view.resources?.getColor(color, null)!!)
+    view.resources?.getColor(color, null)?.let { sb.view.setBackgroundColor(it) }
     sb.show()
 }
 
