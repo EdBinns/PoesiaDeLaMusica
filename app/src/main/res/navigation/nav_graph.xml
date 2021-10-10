@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navCategorysFragment">
+
+    <fragment
+        android:id="@+id/navCategorysFragment"
+        android:name="com.edbinns.poesiadelamusica.view.fragments.CategorysFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_categorys">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navFavoritesFragment"
+        android:name="com.edbinns.poesiadelamusica.view.fragments.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites">
+    </fragment>
+
+    <dialog
+        android:id="@+id/navDialogPhrases"
+        android:name="com.edbinns.poesiadelamusica.view.fragments.PhrasesDialogFragment"
+        android:label="Phrases"
+        tools:layout="@layout/fragment_phrases_dialog" />
+
+</navigation>

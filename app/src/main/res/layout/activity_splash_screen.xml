@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activitys.SplashScreenActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvSplash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/splash_text1"
+                android:textSize="@dimen/text"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true" />
+            <TextView
+                android:id="@+id/tvSplash2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/splash_text2"
+                android:textSize="@dimen/text"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+               />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imvSplash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/poetry"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/splash_image" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

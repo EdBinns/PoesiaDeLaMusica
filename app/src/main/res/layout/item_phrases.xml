@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:id="@+id/llItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPhrase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_margin="5dp"
+            android:text="Frase"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tvArtits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="Astista"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="Likes"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvCantLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tvLike"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="0"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvLike"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp">
+
+                <LinearLayout
+                    android:id="@+id/llLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/imvLIKE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_favorite_border"
+                        tools:ignore="VectorDrawableCompat" />
+                </LinearLayout>
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/imvFavorite"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/llLike"
+                    android:layout_toRightOf="@+id/llLike"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_bookmark_border" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
