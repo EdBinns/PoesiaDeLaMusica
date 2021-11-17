@@ -14,3 +14,4 @@ Para descargar la app puede ir al siguiente link [Pulse aquí](https://github.co
 - Arquitectura MVVM
 - LiveData
 - Room
+- Dagger Hilt
