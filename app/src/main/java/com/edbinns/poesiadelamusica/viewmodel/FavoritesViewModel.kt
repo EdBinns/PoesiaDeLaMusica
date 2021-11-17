@@ -7,22 +7,21 @@ import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.services.repositorys.FavoritesRepository
 import com.edbinns.poesiadelamusica.services.room.FavoritesDB
 import com.edbinns.poesiadelamusica.services.room.toFavorites
-import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
-import com.edbinns.poesiadelamusica.usecases.ListenUpdate
+import com.edbinns.poesiadelamusica.usecases.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
 
-class FavoritesViewModel(application: Application):AndroidViewModel(application){
+class FavoritesViewModel@Inject constructor(
+    private val listen: ListenUpdate,
+    private val getPhraseUpdate: GetPhraseUpdate,
+    private val repository: FavoritesRepository,
+    application: Application):AndroidViewModel(application){
 
-
-    val favoritesList : LiveData<List<Favorites>>
-    private val repository: FavoritesRepository
-    init {
-        val favoriteDao = FavoritesDB.getDB(application).favoritesDao()
-        repository = FavoritesRepository(favoriteDao)
-        favoritesList = repository.getAll
-    }
+    val favoritesList : LiveData<List<Favorites>> = repository.getAll
 
     fun addFavorite(phrases: Phrases) {
         val favorite = phrases.toFavorites()
@@ -33,10 +32,10 @@ class FavoritesViewModel(application: Application):AndroidViewModel(application)
         }
     }
 
-    fun getUseCase(getPhraseUpdate: GetPhraseUpdate) = getPhraseUpdate.invoke()
+    fun getListUpdate() = getPhraseUpdate.invoke()
 
 
-    fun listenUpdate(listen : ListenUpdate){ listen.invoke() }
+    fun listenUpdate(){ listen.invoke() }
 
     fun updateFavorites(phrases: Phrases){
         viewModelScope.launch(Dispatchers.IO) {

@@ -8,29 +8,35 @@ import com.edbinns.poesiadelamusica.usecases.GetListPhrasesUseCase
 import com.edbinns.poesiadelamusica.usecases.GetPhraseUpdate
 import com.edbinns.poesiadelamusica.usecases.SearchPhrase
 import com.edbinns.poesiadelamusica.usecases.ToLiKE
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PhrasesViewModel : ViewModel(){
+@HiltViewModel
+class PhrasesViewModel @Inject constructor(
+    private val toLikeUseCase: ToLiKE,
+    private val searchPhaseUseCase: SearchPhrase,
+    private val getListPhrasesUseCase: GetListPhrasesUseCase,
+    private val getPhraseUpdate: GetPhraseUpdate
+) : ViewModel() {
 
     private var phrasesListMutable = MutableLiveData<List<Phrases>>()
 
-    private var toLikeUseCase: ToLiKE? = null
 
-    fun getUseCase(getListPhrasesUseCase: GetListPhrasesUseCase, category:String) {
-        phrasesListMutable=  getListPhrasesUseCase.invoke(category)
+    fun setCategory( category: String) {
+        phrasesListMutable = getListPhrasesUseCase.invoke(category)
     }
-    fun getUseCase(getPhraseUpdate: GetPhraseUpdate): LiveData<Phrases> = getPhraseUpdate.invoke()
 
-    fun getUseCase(toLiKE: ToLiKE) {
-        toLikeUseCase = toLiKE
-    }
-    fun getUseCase(searchPhaseUseCase: SearchPhrase, artits:String,category:String) {
-        phrasesListMutable=  searchPhaseUseCase.invoke(artits,category)
+    fun getListUpdate(): LiveData<Phrases> = getPhraseUpdate.invoke()
+
+
+    fun search(artits: String, category: String) {
+        phrasesListMutable = searchPhaseUseCase.invoke(artits, category)
     }
 
     fun getListPhases(): LiveData<List<Phrases>> = phrasesListMutable
 
 
-    fun toLike(phrases: Phrases){
+    fun toLike(phrases: Phrases) {
         phrases.likes += 1
         toLikeUseCase?.invoke(phrases)
     }

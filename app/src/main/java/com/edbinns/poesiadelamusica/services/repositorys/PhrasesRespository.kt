@@ -6,8 +6,11 @@ import com.edbinns.poesiadelamusica.services.firebase.Callback
 import com.edbinns.poesiadelamusica.services.firebase.FirestoreService
 import com.edbinns.poesiadelamusica.services.firebase.RealtimeDataListener
 import java.lang.Exception
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PhrasesRespository( private val firestoreService: FirestoreService) {
+@Singleton
+class PhrasesRespository @Inject constructor( private val firestoreService: FirestoreService) {
 
     private val phrasesListLiveData: MutableLiveData<List<Phrases>> = MutableLiveData()
     private val phrasesUpdate: MutableLiveData<Phrases> = MutableLiveData()

@@ -2,13 +2,19 @@ package com.edbinns.poesiadelamusica.services.firebase
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.room.Index
 import com.edbinns.poesiadelamusica.models.Phrases
 import com.edbinns.poesiadelamusica.view.Utils.descapitalizeAllWords
 import com.google.firebase.firestore.FirebaseFirestore
+import javax.inject.Inject
+import javax.inject.Singleton
 
 const val PHRASES_COLLECTION_NAME = "frases"
 
-class FirestoreService(private val firebaseFirestore: FirebaseFirestore) {
+@Singleton
+class FirestoreService @Inject constructor(private val firebaseFirestore: FirebaseFirestore) {
+
+
 // Link para la paginacion
 //    https://firebase.google.com/docs/firestore/query-data/query-cursors
     fun setDocument(data: Any, collectionName: String, id: String, callback: Callback<Void>) {

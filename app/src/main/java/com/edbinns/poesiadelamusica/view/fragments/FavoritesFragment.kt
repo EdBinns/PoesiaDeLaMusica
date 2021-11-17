@@ -24,9 +24,12 @@ import com.edbinns.poesiadelamusica.view.adapters.BindingFavoritesListener
 import com.edbinns.poesiadelamusica.view.adapters.FavoritesAdapter
 import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
-class FavoritesFragment : Fragment(), BindingFavoritesListener{
+@AndroidEntryPoint
+class FavoritesFragment  : Fragment(), BindingFavoritesListener{
 
     private var _binding: FragmentFavoritesBinding? = null
 
@@ -38,27 +41,17 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
     private val binding get() = _binding!!
     private var click = false
 
-    private val firestoreService: FirestoreService by lazy {
-        FirestoreService(FirebaseFirestore.getInstance())
-    }
 
-    private val phrasesRespository: PhrasesRespository by lazy {
-        PhrasesRespository(firestoreService)
-    }
-    private val getPhraseUpdate: GetPhraseUpdate by lazy {
-        GetPhraseUpdate(phrasesRespository)
-    }
 
-    private val listenUpdate: ListenUpdate by lazy {
-        ListenUpdate(phrasesRespository)
-    }
+
     private val favoritesAdapter: FavoritesAdapter by lazy {
         FavoritesAdapter(this)
     }
-
-    private val manager: LinearLayoutManager by lazy {
-        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    private val manager : LinearLayoutManager by lazy {
+        LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
+
+
     private val favoritesViewModel: FavoritesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +69,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
 
         binding.swipeContainerFavorites.setOnRefreshListener {
             favoritesAdapter.deleteData()
-            favoritesViewModel.listenUpdate(listenUpdate)
+            favoritesViewModel.listenUpdate()
             observe()
         }
         return binding.root
@@ -91,7 +84,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
         }
 
         showLoader()
-        favoritesViewModel.listenUpdate(listenUpdate)
+        favoritesViewModel.listenUpdate()
         observe()
     }
 
@@ -108,7 +101,7 @@ class FavoritesFragment : Fragment(), BindingFavoritesListener{
             hideLoader()
         })
 
-        favoritesViewModel.getUseCase(getPhraseUpdate).observe(viewLifecycleOwner, Observer { phrase ->
+        favoritesViewModel.getListUpdate().observe(viewLifecycleOwner, Observer { phrase ->
             println("observer $phrase")
             favoritesAdapter.updateItem(phrase)
             favoritesViewModel.updateFavorites(phrase)

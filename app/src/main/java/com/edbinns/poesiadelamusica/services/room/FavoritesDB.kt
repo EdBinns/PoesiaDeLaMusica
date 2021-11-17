@@ -13,25 +13,4 @@ import com.edbinns.poesiadelamusica.models.Favorites
 )
 abstract class FavoritesDB: RoomDatabase(){
     abstract fun favoritesDao(): FavoriteDao
-    companion object{
-        @Volatile
-        private var INSTANCE: FavoritesDB? = null;
-
-        fun getDB(context : Context): FavoritesDB{
-            val tempInstance = INSTANCE
-            if(tempInstance != null){
-                return tempInstance
-            }
-
-            synchronized(this){
-                val instance = Room.databaseBuilder(
-                    context,
-                    FavoritesDB::class.java,
-                    "favoriteDB"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }
 }

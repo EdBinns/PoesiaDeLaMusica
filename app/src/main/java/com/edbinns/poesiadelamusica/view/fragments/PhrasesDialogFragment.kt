@@ -34,9 +34,11 @@ import com.edbinns.poesiadelamusica.viewmodel.FavoritesViewModel
 import com.edbinns.poesiadelamusica.viewmodel.PhrasesViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
-class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
+@AndroidEntryPoint
+class PhrasesDialogFragment  : DialogFragment(), BindingPhraseListener {
 
 
 
@@ -50,37 +52,14 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
     private var click = false
     private var filter = ""
 
-    private val firestoreService: FirestoreService by lazy {
-        FirestoreService(FirebaseFirestore.getInstance())
-    }
-
-
-
-    private val phrasesRespository : PhrasesRespository by lazy {
-        PhrasesRespository(firestoreService)
-    }
-
-    private val getListPhrasesUseCase : GetListPhrasesUseCase by lazy {
-        GetListPhrasesUseCase(phrasesRespository)
-    }
-
-    private val toLikeUseCase : ToLiKE by lazy {
-        ToLiKE(phrasesRespository)
-    }
-
-    private val getPhraseUpdate : GetPhraseUpdate by lazy {
-        GetPhraseUpdate(phrasesRespository)
-    }
-    private val SearchPhrase : SearchPhrase by lazy {
-        SearchPhrase(phrasesRespository)
-    }
-
     private val phrasesAdapter : PhrasesAdapter by lazy {
         PhrasesAdapter(this)
     }
-    private val manager: LinearLayoutManager by lazy {
-        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+    private val manager : LinearLayoutManager by lazy {
+        LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
+
     private val phrasesViewModel:PhrasesViewModel by viewModels()
 
 
@@ -91,14 +70,14 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
         category = arguments?.getSerializable("category") as String
 
         favoriteViewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
-        phrasesViewModel.getUseCase(toLikeUseCase)
+
 
         binding.swipeContainer.setOnRefreshListener {
             phrasesAdapter.deleteData()
             if(filter.isEmpty())
-                phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
+                phrasesViewModel.setCategory(category)
             else
-                phrasesViewModel.getUseCase(SearchPhrase, filter, category)
+                phrasesViewModel.search(filter, category)
             binding.reloadButton.visibility = View.GONE
         }
 
@@ -118,7 +97,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
 
         searchPhrase()
         showLoader()
-        phrasesViewModel.getUseCase(getListPhrasesUseCase, category)
+        phrasesViewModel.setCategory(category)
         observe()
     }
 
@@ -130,7 +109,7 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
 
         })
 
-        phrasesViewModel.getUseCase(getPhraseUpdate).observe(this, Observer { item ->
+        phrasesViewModel.getListUpdate().observe(this, Observer { item ->
             phrasesAdapter.updateItem(item)
             favoriteViewModel.updateFavorites(item)
         })
@@ -223,10 +202,10 @@ class PhrasesDialogFragment : DialogFragment(), BindingPhraseListener {
             if (query.isEmpty()) {
                 filter = ""
                 println("filter $filter")
-                phrasesViewModel.getUseCase(getListPhrasesUseCase,category)
+                phrasesViewModel.setCategory(category)
             } else {
                 filter = query
-                phrasesViewModel.getUseCase(SearchPhrase, filter.descapitalizeAllWords(), category)
+                phrasesViewModel.search( filter.descapitalizeAllWords(), category)
             }
             hideLoader()
         }
