@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/drawable-v24/shape_search.xml" value="0.1388888888888889" />
         <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/activity_main.xml" value="0.2803442028985507" />
+        <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/fragment_favorites.xml" value="0.3125" />
-        <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/fragment_phrases_dialog.xml" value="0.3125" />
+        <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/fragment_phrases_dialog.xml" value="0.3086053412462908" />
         <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/item_favorite.xml" value="0.3125" />
+        <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/layout/item_phrases.xml" value="0.12681159420289856" />
+        <entry key="..\:/Users/edubi/Documents/personales/PoesiaDeLaMusica/app/src/main/res/menu/bnv_menu.xml" value="0.1546875" />
       </map>
     </option>
   </component>
